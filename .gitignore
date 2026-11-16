@@ -1,0 +1,29 @@
+# Dependencias y entornos
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Generados (se recrean con npm run build / npm run dev y los scripts de datos)
+prototipo/web/dist/
+prototipo/web/public/ocr/
+prototipo/datos/cache_off/
+prototipo/api/datos/
+*.sqlite3
+*.sqlite3-*
+
+# Copias locales y notas de trabajo
+prototipo/respaldos/
+REPORTE_NOCHE.md
+scrum/
+research_notes/
+reports/
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Registros
+*.log

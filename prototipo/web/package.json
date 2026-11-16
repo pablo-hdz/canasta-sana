@@ -1,0 +1,33 @@
+{
+  "name": "canasta-sana",
+  "private": true,
+  "version": "0.3.0",
+  "type": "module",
+  "description": "Prototipo de Canasta sana: tiquete del súper → sellos OPS → qué conviene cambiar y qué buscar (sin sugerir productos ni precios, D-23). Datos SIMULADO salvo la base de Open Food Facts.",
+  "scripts": {
+    "ocr:copiar": "node scripts/copiar-ocr.mjs",
+    "iconos": "node scripts/iconos.mjs",
+    "predev": "node scripts/copiar-ocr.mjs",
+    "dev": "vite",
+    "prebuild": "node scripts/copiar-ocr.mjs",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173 --strictPort",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fontsource/atkinson-hyperlegible-next": "5.3.0",
+    "@tesseract.js-data/spa": "1.0.0",
+    "pdfjs-dist": "4.8.69",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tesseract.js": "5.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.18",
+    "@types/react-dom": "18.3.5",
+    "@vitejs/plugin-react": "4.3.4",
+    "typescript": "5.7.2",
+    "vite": "6.4.6",
+    "vitest": "5.1.0"
+  }
+}

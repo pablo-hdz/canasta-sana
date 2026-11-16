@@ -1,0 +1,7 @@
+# Contexto de construcción mínimo (auditoría P-07): sin node_modules, .venv, la BD de desarrollo ni los respaldos.
+# Docker (BuildKit) usa este archivo porque está junto a api/Dockerfile.
+*
+!api/requirements.txt
+!api/canasta_api/
+!web/public/datos/productos_cr.json
+**/__pycache__

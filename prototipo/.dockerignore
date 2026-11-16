@@ -1,0 +1,7 @@
+**/.venv
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+api/datos
+web/dist
+datos/cache_off

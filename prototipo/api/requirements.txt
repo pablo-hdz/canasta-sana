@@ -1,0 +1,6 @@
+# Servicio (versiones fijas, probadas con Python 3.14.2 el 2026-11-15). FastAPI 0.141.1 es la última sin dependencia de OpenTelemetry; starlette 1.10.0 corrige los 5 avisos de OSV de la 0.49.3 (AUDITORIA.md, P-01).
+fastapi==0.141.1
+starlette==1.10.0
+pydantic==2.14.3
+pydantic_core==2.50.4
+uvicorn==0.38.0

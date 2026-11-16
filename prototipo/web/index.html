@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es-CR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Claro por defecto aunque el teléfono esté en oscuro (D-25); el modo oscuro se elige en Ajustes. -->
+    <meta name="color-scheme" content="light" />
+    <!-- Respeta el tamaño de letra del teléfono (Chrome; los tamaños de la app están en rem). Si el navegador no la conoce, la ignora. -->
+    <meta name="text-scale" content="scale" />
+    <meta name="theme-color" content="#F6F7FC" />
+    <meta name="description" content="Canasta sana (prototipo): revise su tiquete del súper con los criterios de la OPS: qué productos tienen sellos de exceso, cuáles conviene cambiar y qué buscar en su lugar." />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icono.svg" type="image/svg+xml" />
+    <!-- La tipografía (D-07) se sirve desde la app: ver src/main.tsx. Ninguna petición a terceros. -->
+    <title>Canasta sana</title>
+  </head>
+  <body>
+    <div id="raiz"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

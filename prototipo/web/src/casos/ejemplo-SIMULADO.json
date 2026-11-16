@@ -1,0 +1,28 @@
+{
+ "formato": "canasta-sana/caso-de-prueba",
+ "version": 1,
+ "creado": "2026-11-14",
+ "origen": "simulado",
+ "simulado": true,
+ "cadena": null,
+ "baseDescargada": "2026-11-14T06:15:23+00:00",
+ "partes": [
+  "SUPERMERCADO EJEMPLO S.A. (SIMULADO)\nTIQUETE ELECTRONICO\nFECHA 13/11/2026  HORA 10:32\n------------------------------------\nMOULI LEGUM VERT KNOR          1 080\nMULTI CEREA PROTE NS 2 x 1 240 2 480\nTHE DIGEX 2 x 1 260            2 520\nTAPIT                          1 110\nTOSH 28,5G                       200\nYOGUR BIO DEFEN DP             1 200\nMAYON DS                       1 170\nGUAVA JAM SW 2 x 1 300         2 600\nTAMAR HABAN SF                 1 090\nJUGO NARAN                     1 200\nCAPPU VAINI CO 281ML             320\nROTI TESSI                     1 230\n------------------------------------\nSUBTOTAL                      16 200\nTOTAL                         16 200\n[línea quitada: datos personales]\nGRACIAS POR SU COMPRA"
+ ],
+ "total": 16200,
+ "cuadra": true,
+ "lineas": [
+  { "descripcion": "MOULI LEGUM VERT KNOR", "cantidad": 1, "precio": 1080, "codigoLeido": null, "codigo": "0744814648903", "identificado": "texto", "quitada": false },
+  { "descripcion": "MULTI CEREA PROTE NS", "cantidad": 2, "precio": 2480, "codigoLeido": null, "codigo": "0873617008215", "identificado": "texto", "quitada": false },
+  { "descripcion": "THE DIGEX", "cantidad": 2, "precio": 2520, "codigoLeido": null, "codigo": "0730345002284", "identificado": "texto", "quitada": false },
+  { "descripcion": "TAPIT", "cantidad": 1, "precio": 1110, "codigoLeido": null, "codigo": null, "identificado": null, "quitada": false },
+  { "descripcion": "TOSH 28,5G", "cantidad": 1, "precio": 200, "codigoLeido": null, "codigo": "7441163400611", "identificado": "persona", "quitada": false },
+  { "descripcion": "YOGUR BIO DEFEN DP", "cantidad": 1, "precio": 1200, "codigoLeido": null, "codigo": "7441001602931", "identificado": "texto", "quitada": false },
+  { "descripcion": "MAYON DS", "cantidad": 1, "precio": 1170, "codigoLeido": null, "codigo": null, "identificado": null, "quitada": false },
+  { "descripcion": "GUAVA JAM SW", "cantidad": 2, "precio": 2600, "codigoLeido": null, "codigo": "7443011623630", "identificado": "persona", "quitada": false },
+  { "descripcion": "TAMAR HABAN SF", "cantidad": 1, "precio": 1090, "codigoLeido": null, "codigo": "7441006070117", "identificado": "persona", "quitada": false },
+  { "descripcion": "JUGO NARAN", "cantidad": 1, "precio": 1200, "codigoLeido": null, "codigo": null, "identificado": null, "quitada": false },
+  { "descripcion": "CAPPU VAINI CO 281ML", "cantidad": 1, "precio": 320, "codigoLeido": null, "codigo": "7503001453187", "identificado": "texto", "quitada": false },
+  { "descripcion": "ROTI TESSI", "cantidad": 1, "precio": 1230, "codigoLeido": null, "codigo": null, "identificado": null, "quitada": true }
+ ]
+}

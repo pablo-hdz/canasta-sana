@@ -1,0 +1,9 @@
+{
+  "name": "Canasta sana - pantallas v0.1",
+  "id": "canasta-sana-pantallas-v01",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": { "allowedDomains": ["none"] }
+}

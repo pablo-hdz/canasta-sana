@@ -1,0 +1,415 @@
+/* Canasta sana v0.2.2 — pastel periwinkle y amarillo mantequilla, suave pero serio (Pablo, 2026-11-14, D-22):
+   tinta azul marino para el texto, periwinkle para las acciones, tarjetas blancas con sombra suave y frutas ilustradas.
+   Colores como fichas (tokens). El modo oscuro tiene sus propios tonos (no es una inversión automática)
+   y src/contraste.test.ts comprueba el contraste WCAG de cada par de texto y fondo en los dos temas.
+   Colores por nutriente validados con el validador de la skill de visualización (claro y oscuro: todo PASA). */
+:root {
+  color-scheme: light;
+  --fondo: #ECEEF8;          /* alrededor de la app (pantallas anchas) */
+  --superficie: #F6F7FC;     /* fondo de la app */
+  --tarjeta: #FFFFFF;        /* tarjetas */
+  --linea-tarjeta: #ECEEF8;  /* borde fino de las tarjetas */
+  --texto: #1F2240;
+  --gris: #575C7A;           /* notas */
+  --marca: #4350B0;          /* periwinkle fuerte: marca, enlaces y bordes de botón secundario */
+  --acento: #5462D4;         /* botón principal, paso actual y logo */
+  --sobre-acento: #FFFFFF;   /* texto sobre el acento (blanco en claro, azul marino en oscuro) */
+  --acento-claro: #E7E9FF;
+  --hero: #E4E7FF;           /* tarjeta principal: periwinkle pastel */
+  --amarillo: #FFE27A; --amarillo-claro: #FFF6D5;   /* amarillo mantequilla para destacar */
+  --blanco-fijo: #FFFFFF;
+  --acento-grafico: #5462D4; /* anillos y barras (≥ 3:1 contra la tarjeta) */
+  --estado-bajo: #12A15E; --estado-medio: #C27400; --estado-alto: #D93025;   /* % del gasto con sellos: más es peor */
+  --rojo: #B3261E; --rojo-claro: #FDE7E5;
+  --ambar: #8A5300;
+  --ambar-claro: #FFF4D6;
+  --borde: #E1E4F2;
+  --foco: #0B57D0;
+  --n-azucares: #D6467F; --n-sodio: #2A78D6; --n-saturadas: #EB6834; --n-grasas: #6250D6;
+  --t-bebida: #E3EEFF; --i-bebida: #2A6FD6;
+  --t-lacteo: #FFF0D9; --i-lacteo: #A66300;
+  --t-snack: #FFE3EE;  --i-snack: #C2386F;
+  --t-cereal: #FFF5CC; --i-cereal: #8F6400;
+  --t-salsa: #FFE6DC;  --i-salsa: #C4471B;
+  --t-grano: #E6F5DF;  --i-grano: #3F7F25;
+  --t-carne: #F9E1E1;  --i-carne: #B23A3A;
+  --t-otro: #E9EEF2;   --i-otro: #4A5A6A;
+  --t-fruta: #FFEBD6; --i-fruta: #B85A00;
+  --t-verdura: #DDF3EE; --i-verdura: #1F7A68;
+  --sombra: 0 8px 24px rgba(67, 80, 176, .08), 0 1px 3px rgba(31, 34, 64, .05);
+  /* Letra (D-20): la del teléfono, como las apps más usadas (Roboto en Android, San Francisco en iPhone,
+     Segoe UI en Windows). Gratis y sin descargar nada. En Ajustes se puede pasar a Atkinson Hyperlegible (D-07). */
+  --fuente-sistema: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --fuente-legible: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --fuente: var(--fuente-sistema);
+}
+:root[data-letra="legible"] { --fuente: var(--fuente-legible); }
+/* MODO OSCURO (inicio) — los dos bloques deben ser idénticos; lo comprueba contraste.test.ts */
+:root[data-tema="oscuro"] {
+  color-scheme: dark;
+  --fondo: #0B0C14;
+  --superficie: #11131E;
+  --tarjeta: #1A1C2B;
+  --linea-tarjeta: #272A40;
+  --texto: #ECEDF7;
+  --gris: #A4A8C4;
+  --marca: #B4BBFF;
+  --acento: #B4BBFF;
+  --sobre-acento: #1F2240;
+  --acento-claro: #2A2F57;
+  --hero: #252A52;
+  --amarillo: #E9C85A; --amarillo-claro: #3A3418;
+  --blanco-fijo: #FFFFFF;
+  --acento-grafico: #9AA3FF;
+  --estado-bajo: #3DDC93; --estado-medio: #F2A93B; --estado-alto: #FF6B5E;
+  --rojo: #FF9C94; --rojo-claro: #3D1717;
+  --ambar: #F5C26B;
+  --ambar-claro: #332710;
+  --borde: #2F3350;
+  --foco: #8AB4F8;
+  --n-azucares: #E4588C; --n-sodio: #4A8FE6; --n-saturadas: #DC6A33; --n-grasas: #8470EA;
+  --t-bebida: #142640; --i-bebida: #7FB2FF;
+  --t-lacteo: #3A2A10; --i-lacteo: #F2B25C;
+  --t-snack: #3D1626;  --i-snack: #F08AB2;
+  --t-cereal: #3A3210; --i-cereal: #E8C75A;
+  --t-salsa: #3D1E12;  --i-salsa: #F29170;
+  --t-grano: #1C3316;  --i-grano: #8FD472;
+  --t-carne: #3D1717;  --i-carne: #F08C8C;
+  --t-otro: #222A31;   --i-otro: #A9B9C9;
+  --t-fruta: #3A2510; --i-fruta: #FFB066;
+  --t-verdura: #12332C; --i-verdura: #6FD9C0;
+  --sombra: 0 6px 20px rgba(0, 0, 0, .35);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) {
+    color-scheme: dark;
+    --fondo: #0B0C14;
+    --superficie: #11131E;
+    --tarjeta: #1A1C2B;
+    --linea-tarjeta: #272A40;
+    --texto: #ECEDF7;
+    --gris: #A4A8C4;
+    --marca: #B4BBFF;
+    --acento: #B4BBFF;
+    --sobre-acento: #1F2240;
+    --acento-claro: #2A2F57;
+    --hero: #252A52;
+    --amarillo: #E9C85A; --amarillo-claro: #3A3418;
+    --blanco-fijo: #FFFFFF;
+    --acento-grafico: #9AA3FF;
+    --estado-bajo: #3DDC93; --estado-medio: #F2A93B; --estado-alto: #FF6B5E;
+    --rojo: #FF9C94; --rojo-claro: #3D1717;
+    --ambar: #F5C26B;
+    --ambar-claro: #332710;
+    --borde: #2F3350;
+    --foco: #8AB4F8;
+    --n-azucares: #E4588C; --n-sodio: #4A8FE6; --n-saturadas: #DC6A33; --n-grasas: #8470EA;
+    --t-bebida: #142640; --i-bebida: #7FB2FF;
+    --t-lacteo: #3A2A10; --i-lacteo: #F2B25C;
+    --t-snack: #3D1626;  --i-snack: #F08AB2;
+    --t-cereal: #3A3210; --i-cereal: #E8C75A;
+    --t-salsa: #3D1E12;  --i-salsa: #F29170;
+    --t-grano: #1C3316;  --i-grano: #8FD472;
+    --t-carne: #3D1717;  --i-carne: #F08C8C;
+    --t-otro: #222A31;   --i-otro: #A9B9C9;
+    --t-fruta: #3A2510; --i-fruta: #FFB066;
+    --t-verdura: #12332C; --i-verdura: #6FD9C0;
+    --sombra: 0 6px 20px rgba(0, 0, 0, .35);
+  }
+}
+/* MODO OSCURO (fin) */
+
+* { box-sizing: border-box; }
+html { background: var(--fondo); }
+body { margin: 0; font-family: var(--fuente); color: var(--texto); background: var(--fondo); font-size: 1.125rem; line-height: 1.4; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+/* Escala de títulos como Material 3 y iOS: títulos en negrita y un poco más juntos; cuerpo sin cambios (≥ 18 px). */
+button, input, select { font-family: inherit; }
+.anillo .valor, .barra-valor, .tabla td, .detalle, .globo { font-variant-numeric: tabular-nums; }
+.app { max-width: 420px; min-height: 100vh; margin: 0 auto; background: var(--superficie); padding: 20px 16px 0; display: flex; flex-direction: column; gap: 16px; }
+.contenido { display: flex; flex-direction: column; gap: 16px; padding-bottom: 28px; }
+.barra { display: flex; justify-content: space-between; align-items: center; min-height: 32px; }
+.marca { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--texto); font-size: 1.125rem; }
+.marca svg { width: 28px; height: 28px; }
+h1 { margin: 0; font-size: 1.75rem; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; }
+h1.grande { font-size: 2rem; }
+h2 { margin: 0; font-size: 1.25rem; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em; }
+:root[data-letra="legible"] h1, :root[data-letra="legible"] h2 { letter-spacing: 0; }   /* Atkinson se lee mejor sin juntar */
+p { margin: 0; }
+.texto-20 { font-size: 1.25rem; }
+.nota { font-size: 1rem; color: var(--gris); }
+.saludo { font-size: 1rem; color: var(--gris); margin-bottom: 2px; }
+
+/* Botones: el principal es verde intenso con texto blanco (en oscuro, verde claro con texto oscuro). */
+/* Botones en forma de píldora (Material 3, X, TikTok) con respuesta al toque. */
+.boton { display: block; min-height: 56px; width: 100%; border-radius: 999px; font: inherit; font-weight: 700; font-size: 1.125rem; padding: 14px 20px; cursor: pointer; border: 2px solid var(--marca); text-align: center; text-decoration: none; transition: transform .12s ease, box-shadow .12s ease; }
+.boton:not(:disabled):active, .mosaico:active, .nav button:active, .selector button:active { transform: scale(.97); }
+.boton.primario:not(:disabled):hover { box-shadow: 0 6px 16px rgba(84, 98, 212, .35); }
+.boton.primario { background: var(--acento); color: var(--sobre-acento); border-color: var(--acento); }
+.boton.secundario { background: var(--acento-claro); color: var(--marca); border-color: var(--acento-claro); }   /* tonal, como Material 3 */
+.boton.oscuro { background: var(--texto); color: var(--tarjeta); border-color: var(--texto); }
+.boton:disabled { opacity: .5; cursor: default; }
+:focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
+/* Selector de archivo invisible pero alcanzable con teclado: el foco se ve en su botón (la etiqueta). */
+.oculto-accesible { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+label.boton, label.mosaico { position: relative; }
+label.boton:has(.oculto-accesible:focus-visible), label.mosaico:has(.oculto-accesible:focus-visible) { outline: 3px solid var(--foco); outline-offset: 2px; }
+
+.etiqueta { display: inline-block; border-radius: 999px; padding: 4px 12px; font-weight: 600; font-size: 1rem; white-space: nowrap; }
+.etiqueta.listo { background: var(--acento-claro); color: var(--marca); }
+.etiqueta.beneficio { background: var(--amarillo-claro); color: var(--texto); }
+.etiqueta.duda { background: var(--tarjeta); color: var(--ambar); border: 1.5px solid var(--ambar); }
+.etiqueta.simulado { background: var(--ambar-claro); color: var(--ambar); }
+.etiqueta.alerta { background: var(--ambar-claro); color: var(--ambar); border: 1.5px solid var(--ambar); font-weight: 700; }
+.etiqueta { white-space: normal; }
+
+/* Tarjetas: blancas, redondeadas, con sombra suave (en oscuro, con borde fino). */
+.tarjeta { background: var(--tarjeta); border: 1px solid var(--linea-tarjeta); border-radius: 24px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--sombra); }
+.tarjeta.aviso { background: var(--ambar-claro); box-shadow: none; border-color: var(--ambar-claro); }
+.tarjeta.borde { background: var(--tarjeta); }
+.tarjeta.exito { background: var(--acento-claro); box-shadow: none; border-color: var(--acento-claro); }
+.fila { display: flex; align-items: center; gap: 12px; border-radius: 18px; padding: 12px 14px; background: var(--tarjeta); border: 1px solid var(--linea-tarjeta); box-shadow: var(--sombra); }
+.fila.duda { background: var(--ambar-claro); border-color: var(--ambar-claro); box-shadow: none; flex-wrap: wrap; }
+.fila .datos { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.fila .nombre { font-weight: 700; }
+.fila .detalle { font-size: 1rem; color: var(--gris); }
+.fila.hecho .nombre { text-decoration: line-through; color: var(--gris); }
+.sellos { display: flex; gap: 8px; flex-wrap: wrap; }
+/* Por qué lleva cada sello: dato, umbral de la OPS y valor del producto (16 px, texto secundario). */
+.explicacion { display: flex; flex-direction: column; gap: 6px; }
+.explicacion ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.explicacion li { display: grid; grid-template-columns: 32px 1fr; gap: 10px; align-items: start; font-size: 1.125rem; color: var(--texto); }
+.cat.chico { width: 32px; height: 32px; border-radius: 10px; }
+.cat.chico svg { width: 20px; height: 20px; }
+/* Ícono dentro de un botón (decorativo: el texto del botón dice qué hace). */
+.boton svg { width: 22px; height: 22px; vertical-align: -5px; margin-right: 8px; }
+.rotulo { font-size: 1rem; color: var(--gris); }
+.sugerido { font-weight: 700; color: var(--marca); }
+.enlace { background: none; border: none; color: var(--marca); font: inherit; font-size: 1rem; font-weight: 600; text-decoration: underline; cursor: pointer; padding: 8px 0; min-height: 48px; text-align: left; }
+.opciones { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.campo { display: flex; gap: 8px; width: 100%; }
+/* Paso 4 → avisos del producto (B-07, D-29): alerta visible con ícono y texto (el color nunca va solo).
+   Edulcorantes y colorantes de la lista, siempre; alérgenos, los que el hogar marcó. */
+.avisos-producto { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.avisos-producto li { display: flex; gap: 8px; align-items: flex-start; background: var(--ambar-claro); color: var(--texto); border: 1.5px solid var(--ambar); border-radius: 12px; padding: 8px 12px; font-size: 1.125rem; font-weight: 600; }
+.avisos-producto svg { width: 1.25rem; height: 1.25rem; flex: none; margin-top: 1px; color: var(--ambar); }
+/* Ajustes → productos aprendidos (B-03): uno por fila, con su botón «Olvidar». */
+.aprendidos { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.aprendidos li { display: flex; align-items: center; gap: 10px; font-size: 1rem; overflow-wrap: anywhere; }
+.aprendidos li span { flex: 1; min-width: 0; }
+.aprendidos .boton { width: auto; flex: none; min-height: 48px; padding: 8px 16px; font-size: 1rem; }
+.campo input[type=text], select { flex: 1; min-height: 48px; font: inherit; font-size: 1.125rem; padding: 8px 12px; border: 1.5px solid var(--gris); border-radius: 12px; background: var(--tarjeta); color: var(--texto); width: 100%; }
+.casilla { display: flex; align-items: center; gap: 12px; min-height: 48px; font-size: 1.125rem; }
+.casilla input { width: 28px; height: 28px; flex: none; accent-color: var(--marca); }
+.interruptor { display: grid; grid-template-columns: 28px 1fr; gap: 4px 12px; align-items: start; padding: 8px 0; font-size: 1.125rem; }
+.interruptor input { width: 28px; height: 28px; margin: 0; accent-color: var(--marca); }
+.interruptor .nota { grid-column: 2; }
+details > summary { cursor: pointer; font-weight: 700; min-height: 48px; display: flex; align-items: center; color: var(--marca); }
+details > summary::before { content: '▸'; margin-right: 8px; }
+details[open] > summary::before { content: '▾'; }
+.progreso { height: 12px; background: var(--borde); border-radius: 6px; overflow: hidden; }
+.progreso > div { height: 100%; background: var(--acento-grafico); transition: width .2s; }
+
+/* Tarjeta principal del inicio: blanca con borde, ilustración de frutas a color y el botón principal. */
+.hero { position: relative; overflow: hidden; background: var(--hero); color: var(--texto); border-radius: 28px; padding: 6px 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+.hero h1 { color: var(--texto); font-size: 1.75rem; }
+.hero p { font-size: 1.125rem; }
+.hero .boton { margin-top: 4px; }
+
+/* Escenas ilustradas (src/ilustraciones.tsx): completas, nunca recortadas. */
+.escena { display: block; width: 100%; height: auto; overflow: visible; }
+.escena-inicio { max-width: 340px; margin: 0 auto; }
+.escena-leyendo { max-width: 280px; margin: 0 auto; }
+.escena-exito { max-width: 240px; margin: 0 auto; }
+.escena-vacia { max-width: 210px; margin: 0 auto; }
+.escena .il-fondo { fill: var(--acento-claro); }
+.escena-inicio .il-fondo { fill: var(--tarjeta); opacity: .55; }
+.tarjeta.exito .escena .il-fondo { fill: var(--tarjeta); opacity: .5; }
+.escena .il-sombra { fill: var(--texto); opacity: .08; }
+.escena .ani-cae { opacity: 0; }   /* hojitas que caen: solo existen si hay animación */
+
+.subtitulo { font-size: 1.25rem; margin-top: 4px; }
+
+/* Otras formas de empezar: filas con ícono, título y una línea de explicación (en vez de tres mosaicos iguales). */
+.opciones-inicio { display: flex; flex-direction: column; gap: 10px; }
+.opcion { position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: center; min-height: 72px; width: 100%; padding: 12px 16px; border-radius: 20px; background: var(--tarjeta); border: 1px solid var(--linea-tarjeta); box-shadow: var(--sombra); font: inherit; color: var(--texto); text-align: left; cursor: pointer; }
+.opcion .texto { display: flex; flex-direction: column; gap: 2px; }
+.opcion strong { font-size: 1.125rem; }
+label.opcion:has(.oculto-accesible:focus-visible) { outline: 3px solid var(--foco); outline-offset: 2px; }
+
+/* Mosaicos de acciones (ya no se usan en el inicio; se conservan por si otra pantalla los necesita). */
+.mosaicos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mosaico { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 108px; padding: 12px 6px; border-radius: 18px; background: var(--tarjeta); border: 1px solid var(--linea-tarjeta); box-shadow: var(--sombra); font: inherit; font-size: 1rem; font-weight: 600; color: var(--texto); text-align: center; cursor: pointer; line-height: 1.2; }
+
+/* Ícono de categoría: cuadro pastel con dibujo de línea (decorativo; el nombre del producto va en texto). */
+.cat { flex: none; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; }
+.cat svg { width: 28px; height: 28px; }
+.cat.grande { width: 56px; height: 56px; border-radius: 16px; }
+.cat.grande svg { width: 32px; height: 32px; }
+.cat.bebida { background: var(--t-bebida); color: var(--i-bebida); }
+.cat.lacteo { background: var(--t-lacteo); color: var(--i-lacteo); }
+.cat.snack { background: var(--t-snack); color: var(--i-snack); }
+.cat.cereal { background: var(--t-cereal); color: var(--i-cereal); }
+.cat.salsa { background: var(--t-salsa); color: var(--i-salsa); }
+.cat.grano { background: var(--t-grano); color: var(--i-grano); }
+.cat.carne { background: var(--t-carne); color: var(--i-carne); }
+.cat.otro { background: var(--t-otro); color: var(--i-otro); }
+.cat.fruta { background: var(--t-fruta); color: var(--i-fruta); }
+.cat.verdura { background: var(--t-verdura); color: var(--i-verdura); }
+/* Íconos ilustrados de las formas de empezar (inicio), sobre periwinkle o amarillo pastel. */
+.cat.tono-periwinkle { background: var(--acento-claro); } .cat.tono-amarillo { background: var(--amarillo-claro); }
+.cat svg.icono-opcion { width: 40px; height: 40px; }
+/* Íconos ilustrados de categoría (v0.2.5): llenan el cuadro pastel de su categoría. */
+.cat svg.icono-ilustrado { width: 40px; height: 40px; }
+.cat.grande svg.icono-ilustrado { width: 48px; height: 48px; }
+
+/* Anillo: una sola proporción con el número grande al centro. */
+.anillo { display: flex; align-items: center; gap: 16px; }
+.anillo svg { flex: none; width: 128px; height: 128px; }
+.anillo .pista { stroke: var(--borde); }
+.anillo .arco { stroke: var(--acento-grafico); transition: stroke-dasharray .4s; }
+/* Nivel del gasto con sellos (v0.2.3): anillo y barras de un solo tono, sin verde de «logro» (efecto halo, OPS);
+   el nivel lo dice la etiqueta «Nivel bajo/medio/alto», que conserva su color suave. */
+.etiqueta.bajo { background: var(--acento-claro); color: var(--marca); } .etiqueta.medio { background: var(--ambar-claro); color: var(--ambar); } .etiqueta.alto { background: var(--rojo-claro); color: var(--rojo); }
+.anillo .valor { font-size: 30px; font-weight: 700; fill: var(--texto); }
+.anillo .valor.largo { font-size: 24px; }   /* «100 %» cabe dentro del anillo */
+.anillo .unidad { font-size: 16px; fill: var(--gris); }
+
+.encabezado-producto { display: flex; align-items: center; gap: 12px; }
+.anillo { flex-wrap: wrap; }
+.anillo > div { flex: 1; min-width: 150px; display: flex; flex-direction: column; gap: 4px; }
+/* Cambio sugerido: «en vez de» → «pruebe». */
+.cambio { display: grid; grid-template-columns: 48px 1fr; gap: 6px 12px; align-items: center; }
+.cambio .flecha { grid-column: 1; justify-self: center; color: var(--gris); font-size: 1.25rem; line-height: 1; }
+
+/* Indicador de pasos: Leer → Revisar → Canasta → Cambios. */
+.pasos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.pasos button { width: 100%; min-height: 56px; display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: none; font: inherit; font-size: 1rem; color: var(--gris); cursor: pointer; padding: 4px 0; }
+.pasos button:disabled { cursor: default; }
+.pasos .circulo { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--borde); background: var(--tarjeta); font-weight: 700; font-size: 1rem; }
+.pasos .hecho { color: var(--marca); }
+.pasos .hecho .circulo { border-color: var(--marca); }
+.pasos [aria-current="step"] { color: var(--texto); font-weight: 700; }
+.pasos [aria-current="step"] .circulo { background: var(--acento); border-color: var(--acento); color: var(--sobre-acento); }
+
+/* Navegación inferior: la sección activa en una píldora verde claro (como Material 3). */
+.nav { position: sticky; bottom: 0; margin: auto -16px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; background: var(--tarjeta); border-top: 1px solid var(--linea-tarjeta); border-radius: 24px 24px 0 0; box-shadow: 0 -1px 3px rgba(60, 64, 67, .08); padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); z-index: 5; }
+.nav button { position: relative; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: none; border: none; border-radius: 16px; font: inherit; font-size: 1rem; color: var(--gris); cursor: pointer; }
+/* Con la letra del teléfono al 200 %, las 4 secciones siguen cabiendo: la palabra larga se parte con guion. */
+.nav { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.nav button { min-width: 0; text-align: center; line-height: 1.15; overflow-wrap: anywhere; hyphens: auto; }
+.nav button[aria-current="page"] { color: var(--marca); font-weight: 700; background: var(--acento-claro); }
+.nav svg { width: 26px; height: 26px; }
+.nav button[aria-current="page"] svg { fill: currentColor; fill-opacity: .22; }
+.nav .globo { position: absolute; top: 4px; left: calc(50% + 6px); min-width: 24px; height: 24px; border-radius: 12px; background: var(--acento); color: var(--sobre-acento); font-size: 1rem; font-weight: 700; display: grid; place-items: center; padding: 0 5px; }
+
+/* Gráfico de aportes (ver skill de visualización: barras ≤ 24 px, extremo redondeado, base recta, un color por nutriente). */
+.grafico { gap: 12px; }
+.selector { display: flex; flex-wrap: wrap; gap: 8px; }
+.selector button { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--borde); background: var(--tarjeta); color: var(--texto); font: inherit; font-size: 1rem; font-weight: 600; cursor: pointer; }
+.selector button.activo, .selector button[aria-pressed="true"] { background: var(--texto); color: var(--tarjeta); border-color: var(--texto); }
+.selector .muestra-sistema { font-family: var(--fuente-sistema); }
+.selector .muestra-legible { font-family: var(--fuente-legible); }
+.selector .punto { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.barras { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.barra-fila { position: relative; display: flex; flex-direction: column; gap: 4px; outline-offset: 4px; border-radius: 6px; }
+.barra-nombre { font-size: 1rem; color: var(--texto); }
+.barra-pista { display: flex; align-items: center; gap: 8px; }
+.barra-dato { height: 20px; background: var(--acento-grafico); border-radius: 0 6px 6px 0; flex: none; }
+.barra-valor { font-size: 1rem; font-weight: 600; color: var(--texto); white-space: nowrap; }
+.barra-detalle { position: absolute; left: 0; top: 100%; z-index: 2; margin-top: 4px; background: var(--texto); color: var(--tarjeta); font-size: 1rem; padding: 6px 10px; border-radius: 8px; max-width: 100%; }
+.tabla { width: 100%; border-collapse: collapse; font-size: 1rem; margin-top: 8px; }
+/* Con la letra grande del teléfono (hasta 200 %), la tabla se desplaza hacia el lado dentro de su tarjeta (WCAG 1.4.10 lo permite en tablas). */
+.tabla { display: block; overflow-x: auto; max-width: 100%; }
+.tabla th, .tabla td { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--borde); vertical-align: top; }
+.tabla th:not(:first-child), .tabla td:not(:first-child) { text-align: right; white-space: nowrap; }
+pre.tiquete { font-size: 1rem; background: var(--superficie); padding: 12px; border-radius: 12px; overflow-x: auto; color: var(--texto); }
+.vacio { align-items: flex-start; }
+.vacio > svg:not(.escena) { width: 48px; height: 48px; color: var(--marca); }
+/* Escáner de código de barras en vivo: video de la cámara con un recuadro guía (verde) al centro. */
+.escaner { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.visor { position: relative; overflow: hidden; border-radius: 16px; aspect-ratio: 4 / 3; background: var(--sobre-acento); }
+.visor video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.visor .guia { position: absolute; left: 8%; right: 8%; top: 32%; bottom: 32%; border: 3px solid var(--acento); border-radius: 12px; box-shadow: 0 0 0 999px rgba(0, 0, 0, .35); }
+.compartir { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+/* Pegar texto de una factura. */
+details.pegar > summary { gap: 12px; color: var(--texto); }
+details.pegar > summary::before { content: none; }
+details.pegar[open] { gap: 10px; }
+textarea { width: 100%; min-height: 160px; font: inherit; font-size: 1.125rem; padding: 10px 12px; border: 1.5px solid var(--gris); border-radius: 12px; background: var(--tarjeta); color: var(--texto); resize: vertical; }
+/* Animaciones (v0.2.3, informe «Diseño de apps móviles actuales»): cortas y finitas.
+   - Entradas de ≤ 300 ms por bloque y ≤ 400 ms en total; anillo y barras en ≤ 500 ms (NN/g, Material).
+   - Las ilustraciones se mueven a lo sumo 5 s y quedan quietas (WCAG 2.2.2, nivel A): nada en bucle infinito.
+   - Fundidos en vez de rebotes en los sellos (una advertencia no «salta»).
+   - Se apagan con «reducir movimiento» del teléfono o con Ajustes → «Quitar las animaciones». */
+@media (prefers-reduced-motion: no-preference) {
+  .contenido > * { animation: aparecer .28s cubic-bezier(.2, .8, .2, 1) backwards; }
+  .contenido > :nth-child(2) { animation-delay: .03s; } .contenido > :nth-child(3) { animation-delay: .06s; }
+  .contenido > :nth-child(4) { animation-delay: .09s; } .contenido > :nth-child(n+5) { animation-delay: .12s; }
+  .anillo .arco { animation: arco .5s cubic-bezier(.2, .8, .2, 1) backwards; }
+  .barra-dato { transform-origin: left center; animation: crecer .45s cubic-bezier(.2, .8, .2, 1) backwards; }
+  .sellos svg { animation: fundido .3s ease-out backwards; }
+  .sellos svg:nth-child(2) { animation-delay: .05s; } .sellos svg:nth-child(3) { animation-delay: .1s; } .sellos svg:nth-child(n+4) { animation-delay: .15s; }
+  .etiqueta.listo { animation: fundido .25s ease-out backwards; }
+  .nav button { transition: background-color .2s, color .2s, transform .12s; }
+  .opcion .cat { transition: transform .2s; }
+  .opcion:hover .cat { transform: translateY(-2px) rotate(-4deg); }
+  .opcion:active { transform: scale(.98); }
+  /* Escenas: las frutas flotan, las hojas se mecen, el sol gira un poco, cae una gota de jugo, el tiquete se
+     escanea, las frutas reconocidas aparecen, la marca se dibuja y caen hojitas. Todo dura 5 s o menos. */
+  .ani-flota { animation: flotar 2.4s ease-in-out 2; }
+  .d1 { animation-delay: -.6s; } .d2 { animation-delay: -1.2s; } .d3 { animation-delay: -1.8s; } .d4 { animation-delay: -.9s; }
+  .ani-mece { transform-box: fill-box; animation: mecer 2.4s ease-in-out 2; }
+  .ani-mece.lenta { animation-duration: 4.8s; animation-iteration-count: 1; } .ani-mece.inversa { animation-direction: reverse; }
+  .ani-brillo { transform-box: fill-box; transform-origin: center; animation: brillar 2.4s ease-in-out 2; }
+  .ani-gira { transform-box: fill-box; transform-origin: 50% 50%; animation: gira 5s ease-out 1; }
+  .ani-gota { transform-box: fill-box; animation: gota 4.8s ease-in 1; }
+  .ani-escanea { animation: escanea 2.4s ease-in-out 2 alternate; }
+  .ani-asoma { transform-box: fill-box; transform-origin: 50% 100%; animation: aparecerFruta .5s cubic-bezier(.2, .8, .2, 1) backwards; }
+  .ani-asoma.d0 { animation-delay: .2s; } .ani-asoma.d1 { animation-delay: .6s; } .ani-asoma.d2 { animation-delay: 1s; }
+  .ani-cae { transform-box: fill-box; transform-origin: center; animation: cae 3.4s linear 1; }
+  .ani-dibuja { stroke-dasharray: 1; stroke-dashoffset: 1; animation: dibuja .4s .1s ease-out forwards; }
+  .ani-sube { transform-box: fill-box; transform-origin: 50% 100%; animation: crecerY .45s cubic-bezier(.2, .8, .2, 1) backwards; }
+  .ani-sube.d1 { animation-delay: .06s; } .ani-sube.d2 { animation-delay: .12s; }
+}
+@keyframes aparecer { from { opacity: 0; transform: translateY(8px); } }
+@keyframes arco { from { stroke-dashoffset: var(--largo); } }
+@keyframes crecer { from { transform: scaleX(0); } }
+@keyframes fundido { from { opacity: 0; } }
+@keyframes flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.5px); } }
+@keyframes mecer { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-5deg); } 75% { transform: rotate(6deg); } }
+@keyframes brillar { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .3; transform: scale(.6); } }
+@keyframes gira { to { transform: rotate(30deg); } }
+@keyframes gota { 0%, 55% { opacity: 0; transform: translateY(-2px); } 62% { opacity: 1; transform: translateY(0); } 92% { opacity: 1; transform: translateY(12px); } 100% { opacity: 0; transform: translateY(15px); } }
+@keyframes escanea { from { transform: translateY(0); } to { transform: translateY(84px); } }
+@keyframes aparecerFruta { from { opacity: 0; transform: scale(.5) translateY(6px); } }
+@keyframes cae { 0% { opacity: 0; transform: translateY(-8px) rotate(0deg); } 15%, 85% { opacity: 1; } 100% { opacity: 0; transform: translateY(70px) rotate(220deg); } }
+@keyframes dibuja { to { stroke-dashoffset: 0; } }
+@keyframes crecerY { from { transform: scaleY(0); } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+/* Ajustes → «Quitar las animaciones»: lo mismo que el ajuste del teléfono, dentro de la app. */
+:root[data-animaciones="no"] *, :root[data-animaciones="no"] *::before, :root[data-animaciones="no"] *::after { transition: none !important; animation: none !important; }
+:root[data-animaciones="no"] .ani-dibuja { stroke-dasharray: none; stroke-dashoffset: 0; }
+
+/* Microinteracciones al pasar el cursor (v0.2.4, pedido de Pablo): los botones «brincan» un poco.
+   Solo con mouse o lápiz (hover: hover) y si no se pidió reducir el movimiento. En el teléfono no hay «pasar por
+   encima»: queda la respuesta al tocar (se achica un poco). Cortas (≤ 0,5 s) y solo cuando la persona las provoca,
+   así que no cuentan para WCAG 2.2.2. «Quitar las animaciones» también las apaga. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .boton, .opcion, .selector button, .nav button { transition: transform .22s cubic-bezier(.34, 1.56, .64, 1), box-shadow .22s ease, background-color .2s ease; }
+  /* Forma 1 (transform): se eleva y gana sombra. */
+  .boton.secundario:not(:disabled):hover, .selector button:hover, .opcion:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(67, 80, 176, .16); }
+  .nav button:hover { transform: translateY(-2px); }
+  /* Forma 2 (@keyframes): el botón principal brinca; el ícono de la barra salta y el de los botones se ladea. */
+  .boton.primario:not(:disabled):hover, .boton.primario:not(:disabled):focus-visible, label.boton.primario:has(.oculto-accesible:focus-visible) { animation: brinco .5s cubic-bezier(.28, .84, .42, 1); }
+  .nav button:hover svg { animation: brinco .45s cubic-bezier(.28, .84, .42, 1); }
+  .boton:not(:disabled):hover svg { animation: ladeo .4s ease-in-out; }
+  .opcion:hover .icono-opcion { animation: brinco .45s cubic-bezier(.28, .84, .42, 1); }
+  /* Al presionar, vuelve a su lugar y se achica (manda sobre la elevación). */
+  .boton:not(:disabled):active, .opcion:active, .selector button:active, .nav button:active { transform: translateY(0) scale(.97); animation: none; }
+}
+@keyframes brinco { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-6px) scale(1.02); } 55% { transform: translateY(0) scale(.99); } 75% { transform: translateY(-2px) scale(1); } }
+@keyframes ladeo { 0%, 100% { transform: rotate(0deg); } 30% { transform: rotate(-10deg); } 70% { transform: rotate(8deg); } }
+/* Aviso de versión nueva (service worker): flota sobre la navegación; la persona decide cuándo actualizar. */
+.aviso-version { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(96px + env(safe-area-inset-bottom)); width: calc(100% - 32px); max-width: 388px; z-index: 20; display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border-radius: 16px; background: var(--tarjeta); color: var(--texto); border: 1px solid var(--borde); box-shadow: var(--sombra); }
+.aviso-version .acciones { display: flex; align-items: center; gap: 12px; }
+.aviso-version .boton { width: auto; min-height: 48px; padding: 10px 18px; }

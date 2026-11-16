@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Factura SIMULADO para pruebas: no es un comprobante real ni tiene validez tributaria. -->
+<FacturaElectronica xmlns="https://cdn.comprobanteselectronicos.go.cr/xml-schemas/v4.4/facturaElectronica">
+  <Clave>00000000000000000000000000000000000000000000000000</Clave>
+  <FechaEmision>2026-11-14T09:15:00-06:00</FechaEmision>
+  <Emisor><Nombre>SUPERMERCADO EJEMPLO S.A.</Nombre><NombreComercial>Súper Ejemplo (SIMULADO)</NombreComercial></Emisor>
+  <Receptor><Nombre>PERSONA DE PRUEBA</Nombre></Receptor>
+  <DetalleServicio>
+    <LineaDetalle><NumeroLinea>1</NumeroLinea><CodigoCABYS>2399999000000</CodigoCABYS><CodigoComercial><Tipo>03</Tipo><Codigo>7441163400611</Codigo></CodigoComercial><Cantidad>1.000</Cantidad><UnidadMedida>Unid</UnidadMedida><Detalle>GALLETA FUSION DE CEREALES</Detalle><PrecioUnitario>300.00000</PrecioUnitario><MontoTotalLinea>300.00000</MontoTotalLinea></LineaDetalle>
+    <LineaDetalle><NumeroLinea>2</NumeroLinea><CodigoCABYS>2399999000000</CodigoCABYS><CodigoComercial><Tipo>03</Tipo><Codigo>7441003571488</Codigo></CodigoComercial><Cantidad>1.000</Cantidad><UnidadMedida>Unid</UnidadMedida><Detalle>GINGER ALE</Detalle><PrecioUnitario>460.00000</PrecioUnitario><MontoTotalLinea>460.00000</MontoTotalLinea></LineaDetalle>
+    <LineaDetalle><NumeroLinea>3</NumeroLinea><CodigoCABYS>2399999000000</CodigoCABYS><CodigoComercial><Tipo>03</Tipo><Codigo>0038527591121</Codigo></CodigoComercial><Cantidad>1.000</Cantidad><UnidadMedida>Unid</UnidadMedida><Detalle>CAP’N CRUNCH</Detalle><PrecioUnitario>1460.00000</PrecioUnitario><MontoTotalLinea>1460.00000</MontoTotalLinea></LineaDetalle>
+    <LineaDetalle><NumeroLinea>4</NumeroLinea><CodigoCABYS>2399999000000</CodigoCABYS><CodigoComercial><Tipo>03</Tipo><Codigo>7441001615566</Codigo></CodigoComercial><Cantidad>1.000</Cantidad><UnidadMedida>Unid</UnidadMedida><Detalle>GRIEGO</Detalle><PrecioUnitario>300.00000</PrecioUnitario><MontoTotalLinea>300.00000</MontoTotalLinea></LineaDetalle>
+    <LineaDetalle><NumeroLinea>5</NumeroLinea><CodigoCABYS>2399999000000</CodigoCABYS><CodigoComercial><Tipo>03</Tipo><Codigo>0747627005116</Codigo></CodigoComercial><Cantidad>1.000</Cantidad><UnidadMedida>Unid</UnidadMedida><Detalle>SALSA SAUCE</Detalle><PrecioUnitario>670.00000</PrecioUnitario><MontoTotalLinea>670.00000</MontoTotalLinea></LineaDetalle>
+    <LineaDetalle><NumeroLinea>6</NumeroLinea><CodigoCABYS>2399999000000</CodigoCABYS><CodigoComercial><Tipo>03</Tipo><Codigo>0750894611812</Codigo></CodigoComercial><Cantidad>1.000</Cantidad><UnidadMedida>Unid</UnidadMedida><Detalle>PAPAS FRITAS CON SABOR A MIEL Y MOSTAZA</Detalle><PrecioUnitario>300.00000</PrecioUnitario><MontoTotalLinea>300.00000</MontoTotalLinea></LineaDetalle>
+    <LineaDetalle><NumeroLinea>7</NumeroLinea><CodigoCABYS>2399999000000</CodigoCABYS><CodigoComercial><Tipo>03</Tipo><Codigo>7441001619007</Codigo></CodigoComercial><Cantidad>1.000</Cantidad><UnidadMedida>Unid</UnidadMedida><Detalle>JUGO DE NARANJA</Detalle><PrecioUnitario>1120.00000</PrecioUnitario><MontoTotalLinea>1120.00000</MontoTotalLinea></LineaDetalle>
+    <LineaDetalle><NumeroLinea>8</NumeroLinea><CodigoCABYS>2399999000000</CodigoCABYS><Cantidad>1.000</Cantidad><UnidadMedida>Unid</UnidadMedida><Detalle>BOLSA REUTILIZABLE</Detalle><PrecioUnitario>350.00000</PrecioUnitario><MontoTotalLinea>350.00000</MontoTotalLinea></LineaDetalle>
+  </DetalleServicio>
+  <ResumenFactura><TotalComprobante>4960.00000</TotalComprobante></ResumenFactura>
+</FacturaElectronica>
